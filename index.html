@@ -8,45 +8,183 @@
 
   <link rel="import" href="./bower_components/MetaRoomMarkup/dist/metaroom-markup.html">
   <script src="./bower_components/webcomponentsjs/webcomponents.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    var changiLogo = $('#changi-logo');
+    var video = $('#video-on-left-wall');
+    var tableOnWall = document.getElementsByClassName('table-on-wall');
+    var item = $('#item-on-wall-table');
+    var metaVerse = $('#meta-verse');
+    var scene = metaVerse[0].controller.gameObject.scene;
+
+    changiLogo[0].controller.metaObject.group.position.z = changiLogo[0].controller.properties.length / 2;
+    video[0].controller.metaObject.group.position.z = 2;
+
+    for (var i = 0; i < tableOnWall.length; i++) {
+      tableOnWall[i].controller.metaObject.group.position.z = 2
+    }
+    item[0].controller.metaObject.group.position.z = 4;
+
+    var urlPrefix = "assets/img/betterskybox_";
+     var directions  = [ "zneg", "zpos", "ypos", "yneg", "xpos", "xneg"];
+    var imageSuffix = ".png";
+    var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );
+
+    var materialArray = [];
+    for (var i = 0; i < 6; i++){
+      materialArray.push( new THREE.MeshBasicMaterial({
+        map: THREE.ImageUtils.loadTexture( urlPrefix + directions[i] + imageSuffix ),
+        side: THREE.BackSide
+      }));
+    }
+    var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+
+    var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+    scene.add( skyBox );
+  });
+
+  </script>
 </head>
 
 <body>
-  <meta-verse>
+  <meta-verse id='meta-verse'>
     <meta-style>
       meta-table{
         thickness: 0.3;
-        tbottom-padding-top: 0.3;
-        tbottom-padding-bottom: 0.1;
-        material-color: #416fa0;
+        <!-- tbottom-padding-top: 0.3;
+        tbottom-padding-bottom: 0.1; -->
+        material-color: #9E1616;
       }
       meta-wall{
-        material-color: #d3d3d3;
+        material-color: #000000;
+      }
+      #table-in-front-on-left{
+        position: absolute;
+        top: 1;
+        left: 0
+      }
+      #table-in-front-on-right{
+        position: absolute;
+        top: 1;
+        left: 30
+      }
+      #table-on-right{
+        rotate-z: 270;
+        position: absolute;
+        top: 15;
+        left: 33;
+      }
+      #table-on-left{
+        rotate-z: 90;
+        position: absolute;
+        top: 23;
+        left: 0;
+      }
+      #table-in-center{
+        thickness: 0.1;
+        material-color:#C12228;
+        position: absolute;
+        top: 15;
+        left: 15;
+        tbottom-padding-bottom: 0;
+        tbottom-padding-top: 0;
+      }
+      #changi-logo{
+        position: absolute;
+        top: 0;
+        left: 0;
+        frame-width: 0.2;
+        rotate-x:90
+      }
+      #video-on-left-wall{
+        position: absolute;
+        top: 3;
+        left: 12;
       }
     </meta-style>
-    <meta-room width='10' height='3' length='20'>
+    <meta-room width='80' height='15' length='60'>
       <meta-wall align='left' meta-style='thickness: 1;'>
+        <meta-video id='video-on-left-wall' width='8' length='5' src='assets/img/sintel.mp4'>
+        </meta-video>
       </meta-wall>
       <meta-wall align='right'>
       </meta-wall>
       <meta-wall align='front' meta-style='material-color: #e7e3e4;'>
-      </meta-wall>
-      <meta-wall align='back'>
-      </meta-wall>
-      <meta-floor>
-        <meta-table height='3'>
+        <meta-table class='table-on-wall' width='4' length='2' meta-style='position:absolute; top: 2; left: 8; rotate-x: 270; material-color: #e4be25'>
           <meta-tsurface>
-            <meta-item width='2' length='2' height='4' material-src='assets/model/pokka/model_mesh.obj.mtl' geometry-src='assets/model/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
-            <meta-item width='1' length='1' height='2' material-src='assets/model/pokka/model_mesh.obj.mtl' geometry-src='assets/model/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+          </meta-tsurface>
+        </meta-table>
+        <meta-table class='table-on-wall' width='4' length='2' meta-style='position:absolute; top: 3.5; left: 14; rotate-x: 270; material-color: #e4be25'>
+          <meta-tsurface>
+            <meta-item id='item-on-wall-table' width='1' length='1' height='2' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+          </meta-tsurface>
+        </meta-table>
+        <meta-table width='4' length='2' class='table-on-wall' meta-style='position:absolute; top: 5; left: 20; rotate-x: 270; material-color: #e4be25'>
+          <meta-tsurface>
+          </meta-tsurface>
+        </meta-table>
+      </meta-wall>
+      <!-- <meta-wall align='back'>
+      </meta-wall> -->
+      <meta-floor meta-style='material-texture:assets/img/floormat1.jpg; material-texture-repeat: repeat'>
+        <meta-table id='table-in-front-on-left' width='5' length='3' height='3'>
+          <meta-tsurface>
+            <meta-item width='2' length='2' height='4' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+            <meta-item width='1' length='1' height='2' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
           </meta-tsurface>
           <meta-tbottom align='right'>
           </meta-tbottom>
           <meta-tbottom align='left'>
           </meta-tbottom>
         </meta-table>
+        <meta-table id='table-in-front-on-right' width='5' length='3' height='3'>
+          <meta-tsurface>
+            <meta-item width='2' length='2' height='4' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+            <meta-item width='1' length='1' height='2' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+          </meta-tsurface>
+          <meta-tbottom align='right'>
+          </meta-tbottom>
+          <meta-tbottom align='left'>
+          </meta-tbottom>
+        </meta-table>
+
+        <meta-table id='table-on-right' width='5' height='3' length='5' >
+          <meta-tsurface>
+            <meta-item width='2' length='2' height='4' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+            <meta-item width='1' length='1' height='2' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+          </meta-tsurface>
+          <meta-tbottom align='right'>
+          </meta-tbottom>
+          <meta-tbottom align='left'>
+          </meta-tbottom>
+        </meta-table>
+
+        <meta-table id='table-on-left' width='5' height='3' length='5' >
+          <meta-tsurface>
+            <meta-item width='2' length='2' height='4' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+            <meta-item width='1' length='1' height='2' material-src='assets/pokka/model_mesh.obj.mtl' geometry-src='assets/pokka/model_mesh.obj' id='meta-item-on-floor'></meta-item>
+          </meta-tsurface>
+          <meta-tbottom align='right'>
+          </meta-tbottom>
+          <meta-tbottom align='left'>
+          </meta-tbottom>
+        </meta-table>
+
+        <meta-table id='table-in-center' width='10' height='1' length='10'>
+          <meta-tsurface>
+            <meta-picture id='changi-logo' width='10' length='5' src='assets/img/ichangiPic.jpg'></meta-picture>
+          </meta-tsurface>
+          <meta-tbottom align='right'>
+          </meta-tbottom>
+          <meta-tbottom align='left'>
+          </meta-tbottom>
+          <meta-tbottom align='front'>
+          </meta-tbottom>
+          <meta-tbottom align='back'>
+          </meta-tbottom>
+        </meta-table>
       </meta-floor>
     </meta-room>
   </meta-verse>
 </body>
-
-</body>
-
