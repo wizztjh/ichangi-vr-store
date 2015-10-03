@@ -1,0 +1,21 @@
+{
+  "name": "ichangi-vr-store",
+  "version": "0.0.0",
+  "homepage": "https://github.com/wizztjh/ichangi-vr-store",
+  "authors": [
+    "Tee Jia Hen <wizztjh@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "*",
+    "MetaRoomMarkup":"git://github.com/MetaRoomMarkup/MetaRoomMarkup.git#gh-pages"
+  }
+}
