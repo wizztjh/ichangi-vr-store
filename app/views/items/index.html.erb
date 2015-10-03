@@ -1,0 +1,41 @@
+  <meta-verse>
+    <meta-style>
+      meta-table{
+        thickness: 0.3;
+        tbottom-padding-top: 0.3;
+        tbottom-padding-bottom: 0.1;
+        material-color: #416fa0;
+      }
+      meta-wall{
+        material-color: #d3d3d3;
+      }
+    </meta-style>
+    <meta-room width='10' height='3' length='20'>
+      <meta-wall align='left' meta-style='thickness: 1;'>
+      </meta-wall>
+      <meta-wall align='right'>
+      </meta-wall>
+      <meta-wall align='front' meta-style='material-color: #e7e3e4;'>
+      </meta-wall>
+      <meta-wall align='back'>
+      </meta-wall>
+      <meta-floor>
+        <meta-table id='side-table' height='3'>
+          <meta-tsurface>
+            <% @items.each do |item| %>
+              <meta-item width='2' length='2' height='4'
+                material-src=<%= item.mtl_file %>
+                geometry-src=<%= item.obj_file %>
+              ></meta-item>
+            <% end %>
+          </meta-tsurface>
+          <meta-tbottom align='right'>
+          </meta-tbottom>
+          <meta-tbottom align='left'>
+          </meta-tbottom>
+        </meta-table>
+      </meta-floor>
+    </meta-room>
+  </meta-verse>
+
+

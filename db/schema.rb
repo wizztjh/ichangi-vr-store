@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151003052703) do
+ActiveRecord::Schema.define(version: 20151003103439) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -45,5 +45,27 @@ ActiveRecord::Schema.define(version: 20151003052703) do
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+
+  create_table "items", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.string   "item_obj_file_name"
+    t.string   "item_obj_content_type"
+    t.integer  "item_obj_file_size"
+    t.datetime "item_obj_updated_at"
+    t.string   "item_mtl_file_name"
+    t.string   "item_mtl_content_type"
+    t.integer  "item_mtl_file_size"
+    t.datetime "item_mtl_updated_at"
+    t.string   "item_texture_file_name"
+    t.string   "item_texture_content_type"
+    t.integer  "item_texture_file_size"
+    t.datetime "item_texture_updated_at"
+    t.string   "table_name"
+    t.string   "width"
+    t.string   "height"
+    t.string   "length"
+  end
 
 end
